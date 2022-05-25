@@ -83,7 +83,6 @@ def list_of_bets():
 
 if __name__ == '__main__':
 
-    list_of_bets()
-
+    print(list_of_bets())
 
 

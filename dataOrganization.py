@@ -31,28 +31,21 @@ for i in range(len(chunked_list)):
             namelowerA = aligulac_list[i][2]
             higherA = float(aligulac_list[i][1])
             namehigherA = aligulac_list[i][0]
-        print("Bovada")
-        print(lower)
-        print(namelower)
-        print(higher)
-        print(namehigher)
-        print("Aligulac")
-        print(lowerA)
-        print(namelowerA)
-        print(higherA)
-        print(namehigherA)
+
 
         # Bovada prob of non favored player winning
         BPNFW = lower
         # Bovad prob favored player winning
         BPFW = higher
         # actuall prob of non favored player winning
-        PNFW = lowerA
+        PNFW = lowerA / 100
+        # actuall prob of favored player winnng
+        PFW = higherA / 100
         # amount won non favored wins
-        AWNFW = (baseline * ip_to_decimal(BPNFW)) - 100
+        amount_won_non_favored = (baseline * ip_to_decimal(BPNFW)) - 100
         # amount won favored player wins
         try:
-            AWFW = (baseline * ip_to_decimal(BPFW)) - 100
+            amount_won_favored = (baseline * ip_to_decimal(BPFW)) - 100
         except:
             print("fail!")
         # Actuall prob of loss non favored player
@@ -60,16 +53,18 @@ for i in range(len(chunked_list)):
         # amount loss
         AML = -baseline
 
-        eNONFAVORED = (PNFW * AWNFW) + (PNFL * AML)
-        print(AWNFW)
+        estimated_loss_non_favored = PNFL * AML
+        print(estimated_loss_non_favored)
+        estimated_won_non_favored = PNFW * amount_won_non_favored
+        print(estimated_won_non_favored)
+        eNONFAVORED = (estimated_won_non_favored) + (estimated_loss_non_favored)
 
-        print(PNFL, AWFW, PNFW, AML)
-        eFAVORED = (PNFL * AWFW) + (PNFW * AML)
-        print(eFAVORED)
-        if eNONFAVORED >= 0:
-            print(" e non favored > 0 ")
-        if eFAVORED >= 0:
-            print("e favored > 0")
+        eFAVORED = (PNFL * amount_won_favored) + (PNFW * AML)
+
+        if eNONFAVORED > 0:
+            print("Betting on {} vs {} estimated return is = {}. ".format(namelower, namehigher, eNONFAVORED ))
+        if eFAVORED > 0:
+            print("Betting on {} vs {} estimated return is = {}. ".format(namehigher, namelower, eFAVORED))
         if eFAVORED == 0:
             print("e favored = 0 ")
         if eNONFAVORED == 0:
