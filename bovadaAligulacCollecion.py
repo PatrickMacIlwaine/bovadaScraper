@@ -7,8 +7,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-
-
 # FUNCTIONS
 # Get player_one and player_two from Aligulac
 def player_id(player_name):
@@ -47,7 +45,7 @@ def aligulac_percent_bo3(player_one, player_two):
         percent_second_player = stats[74:84].replace("%\n", "").strip()
     except:
         percent_first_player = 0
-        percent_second_player = 1
+        percent_second_player = 0
     # return(player_one + percent_first_player + " " + player_two + " " + percent_second_player)
     returnList = [player_one, percent_first_player, player_two, percent_second_player]
 
@@ -208,6 +206,7 @@ def main():
     get_chunked_list()
     print_out_bovada()
     print_out_Aligulac()
+
 
 
 if __name__ == '__main__':
