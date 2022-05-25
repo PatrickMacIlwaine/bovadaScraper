@@ -1,10 +1,14 @@
 # Imports
+from typing import List
+
 import bs4
 import requests
 from bs4 import BeautifulSoup
 import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
+#Feilds
 
 
 # FUNCTIONS
@@ -32,8 +36,6 @@ def player_id(player_name):
 
     id_and_name = pID + '-' + player_name
     return id_and_name
-
-
 # percent chance of winning bo3
 def aligulac_percent_bo3(player_one, player_two):
     content = requests.get(
@@ -45,56 +47,46 @@ def aligulac_percent_bo3(player_one, player_two):
         percent_second_player = stats[74:84].replace("%\n", "").strip()
     except:
         percent_first_player = 0
-        percent_second_player = 0
+        percent_second_player = 1
     # return(player_one + percent_first_player + " " + player_two + " " + percent_second_player)
     returnList = [player_one, percent_first_player, player_two, percent_second_player]
 
     return returnList
-
-
 # decimal odds to implied probability
 def decimal_to_percent(decimal_odds):
     implied_probability = (1 / decimal_odds) * 100
     return implied_probability
-
-
 # implied probability to decimal odds
 def ip_to_decimal(ip):
     ip = float(ip)
     decimal_odds = 100 / ip
     decimal_odds = round(decimal_odds, 2)
     return decimal_odds
-
-
 # American odds to implied probability
 def neg_american_to_ip(american):
     ip = (-1) * american / ((-1) * american + 100) * 100
     return (ip)
 
-
 def pos_american_to_ip(american):
     ip = 100 / (american + 100) * 100
     return ip
 
-
 # american to decimal
-
 def american_to_decimal(american):
     if american > 0:
         decimal = (american / 100) + 1
-    if american <= 0:
+    else:
         decimal = 1 + (100 / ((-1) * american))
     return decimal
 
-
-if __name__ == '__main__':
-
+def main():
     url = 'https://www.bovada.lv/sports/esports/starcraft'
     options = Options()
     options.add_argument('--headless')
+    # path to chromedriver
     browser = webdriver.Chrome(executable_path="/Users/Patrick/chromedriver", options=options)
     browser.get(url)
-    time.sleep(3)
+    time.sleep(4)
     html = browser.page_source
     browser.quit()
     soup = bs4.BeautifulSoup(html, 'lxml')
@@ -154,7 +146,7 @@ if __name__ == '__main__':
         new_list.append(str(odds_im_prob_list[i]))
 
     chunk_size = 4
-    chunked_list = [new_list[i:i + chunk_size] for i in range(0, len(new_list), chunk_size)]
+    chunked_list: list[list[str]] = [new_list[i:i + chunk_size] for i in range(0, len(new_list), chunk_size)]
 
     # print Bovada data in same format
     print("Bovada Data : ")
@@ -165,17 +157,23 @@ if __name__ == '__main__':
         # print(" ".join(i))
 
     # takes bovada and makes into aligulac data
-    j = -1
     print("")
     print("")
     print("Aligulac Data : ")
     AligulacList = []
+    j = -1
     for i in chunked_list:
         j += 1
-        player_one = chunked_list[j][0]
-        player_two = chunked_list[j][2]
+        player_one = str(chunked_list[j][0])
+        player_two = str(chunked_list[j][2])
         AligulacList.append(aligulac_percent_bo3(player_one, player_two))
+
+
 
     for i in AligulacList:
         # print(" ".join(i))
         print(i)
+
+if __name__ == '__main__':
+
+   main()

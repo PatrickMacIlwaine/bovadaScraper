@@ -1,9 +1,12 @@
 #Work in progress....
+import bovadaAligulacCollecion
+from bovadaAligulacCollecion import *
 
-
-
-
+bovadaAligulacCollecion.main()
+print(BovadaData)
+print(AligulacGlobal)
 # data orginization
+
 baseline = 100
 for i in range(len(chunked_list)):
 
