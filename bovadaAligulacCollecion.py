@@ -1,5 +1,4 @@
 # Imports
-from typing import List
 
 import bs4
 import requests
@@ -8,7 +7,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-#Feilds
 
 
 # FUNCTIONS
@@ -36,6 +34,8 @@ def player_id(player_name):
 
     id_and_name = pID + '-' + player_name
     return id_and_name
+
+
 # percent chance of winning bo3
 def aligulac_percent_bo3(player_one, player_two):
     content = requests.get(
@@ -52,24 +52,32 @@ def aligulac_percent_bo3(player_one, player_two):
     returnList = [player_one, percent_first_player, player_two, percent_second_player]
 
     return returnList
+
+
 # decimal odds to implied probability
 def decimal_to_percent(decimal_odds):
     implied_probability = (1 / decimal_odds) * 100
     return implied_probability
+
+
 # implied probability to decimal odds
 def ip_to_decimal(ip):
     ip = float(ip)
     decimal_odds = 100 / ip
     decimal_odds = round(decimal_odds, 2)
     return decimal_odds
+
+
 # American odds to implied probability
 def neg_american_to_ip(american):
     ip = (-1) * american / ((-1) * american + 100) * 100
     return (ip)
 
+
 def pos_american_to_ip(american):
     ip = 100 / (american + 100) * 100
     return ip
+
 
 # american to decimal
 def american_to_decimal(american):
@@ -79,7 +87,8 @@ def american_to_decimal(american):
         decimal = 1 + (100 / ((-1) * american))
     return decimal
 
-def main():
+
+def start_browser_soup():
     url = 'https://www.bovada.lv/sports/esports/starcraft'
     options = Options()
     options.add_argument('--headless')
@@ -89,10 +98,12 @@ def main():
     time.sleep(4)
     html = browser.page_source
     browser.quit()
-    soup = bs4.BeautifulSoup(html, 'lxml')
+    lesoup = bs4.BeautifulSoup(html, 'lxml')
+    return lesoup
 
-    # Data to a list with odds
 
+def get_chunked_list():
+    soup = start_browser_soup()
     playercount = 0
     players_list = []
     odds_list = []
@@ -148,7 +159,24 @@ def main():
     chunk_size = 4
     chunked_list: list[list[str]] = [new_list[i:i + chunk_size] for i in range(0, len(new_list), chunk_size)]
 
+    return chunked_list
+
+
+def get_aligulac_list():
+    chunked_list = get_chunked_list()
+    AligulacList = []
+    j = -1
+    for i in chunked_list:
+        j += 1
+        player_one = str(chunked_list[j][0])
+        player_two = str(chunked_list[j][2])
+        AligulacList.append(aligulac_percent_bo3(player_one, player_two))
+    return AligulacList
+
+
+def print_out_bovada():
     # print Bovada data in same format
+    chunked_list = get_chunked_list()
     print("Bovada Data : ")
     j = -1
 
@@ -156,7 +184,9 @@ def main():
         print(i)
         # print(" ".join(i))
 
-    # takes bovada and makes into aligulac data
+
+def print_out_Aligulac():
+    chunked_list = get_chunked_list()
     print("")
     print("")
     print("Aligulac Data : ")
@@ -168,12 +198,17 @@ def main():
         player_two = str(chunked_list[j][2])
         AligulacList.append(aligulac_percent_bo3(player_one, player_two))
 
-
-
     for i in AligulacList:
         # print(" ".join(i))
         print(i)
 
-if __name__ == '__main__':
 
-   main()
+def main():
+    start_browser_soup()
+    get_chunked_list()
+    print_out_bovada()
+    print_out_Aligulac()
+
+
+if __name__ == '__main__':
+    main()
