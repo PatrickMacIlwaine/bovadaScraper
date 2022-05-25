@@ -6,6 +6,8 @@ to scrape because Bovada is banned in Italy. Once I VPNed to California everythi
 
 Currently, this project only works with Starcraft 2, as the database I am using to compare too is Alligulac.
 
+Note : I am only taking the Win/Loss bets, not map score or anything else.
+
 yeet.
 
 
