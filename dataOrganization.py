@@ -70,14 +70,14 @@ def sortdata():
 
 
             if eNONFAVORED > 0:
-                print("Betting on {} vs {} estimated return is = {}. ".format(namelower, namehigher, eNONFAVORED))
+                print("Betting on {} vs {} estimated return is = {}. Win: ${}, Loss ${} ".format(namelower, namehigher, eNONFAVORED, amount_won_non_favored,baseline))
 
             if eNONFAVORED < 0:
-                print("Betting on {} vs {} estimated return is = {}. ".format(namelower, namehigher, eNONFAVORED))
+                print("Betting on {} vs {} estimated return is = {}. Win: ${}, Loss ${} ".format(namelower, namehigher, eNONFAVORED, amount_won_non_favored,baseline))
 
             if eFAVORED > 0:
-                print("Betting on {} vs {} estimated return is = {}. ".format(namehigher, namelower, eFAVORED))
+                print("Betting on {} vs {} estimated return is = {}. Win: ${}, Loss ${} ".format(namehigher, namelower, eFAVORED,amount_won_favored,baseline))
 
             if eFAVORED < 0:
-                print("Betting on {} vs {} estimated return is = {}. ".format(namehigher, namelower, eFAVORED))
+                print("Betting on {} vs {} estimated return is = {}. Win: ${}, Loss ${} ".format(namehigher, namelower, eFAVORED,amount_won_favored,baseline))
 
