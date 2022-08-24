@@ -1,14 +1,10 @@
 """
 This project is about beating the gambling websites.
 
-Note that for the scrapers to work you must vpn to a state where it is legal. For example, in Italy I was unable
-to scrape because Bovada is banned in Italy. Once I VPNed to California everything worked fine.
+This program scrapes Bovada betting data on Starcraft 2 matches and compares it with Aligulac predictions in order to find beats that are statistically favorable.
 
-Currently, this project only works with Starcraft 2, as the database I am using to compare too is Alligulac.
+The reason I made this program is to better understand how the gambiling websites set their odds. 
 
-Note : I am only taking the Win/Loss bets, not map score or anything else.
-
-yeet.
-
+The program will output the estimated return for each bet based on Aligulac betting odds. 
 
 """
