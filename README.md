@@ -12,7 +12,7 @@ Replace the url with the link to the bovada page that you want to scrape from.
 Note :  If the page is too long, not all the matches will load and only the top matches will be scraped. Will be fixed in a future version. 
 ## To Get Starcraft II odds and compare to Aligulac's prediction algorithm
 ### Follow Steps 1 & 2 
-Run Main.py
+Run main.py
 
 
 
