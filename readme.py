@@ -7,6 +7,8 @@ The reason I made this program is to better understand how the gambiling website
 
 The program will output the estimated return for each bet based on Aligulac betting odds. 
 
-To run the program run main.py.
+TO SCRAPE BOVADA MATCHES: Go to getBovadaBets.py and set url = the page that you want to scape odds from.
+
+TO SCRAPE AND COMPARE STARCRAFT 2 MATCHES TO ALIGULAC: Run main.py
 
 """
